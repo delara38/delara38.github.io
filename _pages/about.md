@@ -27,8 +27,12 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+I am a Master of Science (MSc) student at the Universtiy of Toronto in the <a href='https://rvl.cs.toronto.edu/'>Robot Vision and Learning Lab</a> Supervised by <a href='https://www.cs.toronto.edu/~florian/'> Prof. Florian Shkurti</a>. Previously, I obtained a B.A. at McGill University where I was fortunate to conduct research advised advised by <a href='https://mila.quebec/en/directory/doina-precup'>Prof. Doina Precup</a> and <a href='https://www.math.mcgill.ca/~steele/Site/Home.html'>Prof. Russell Steele</a>. 
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+
+My main driving question during my masters: How can RL scale better than BC for Pre-Training? 
+
+Papers in the offline RL community suggest RL should outperform BC when trained on large noisy datasets containing suboptimal demonstrations. This setting bears a strong resemblance to the majority of internet data out there. Yet, RL has failed to be used in favour of BC for large-scale pre-training. My research goal is to help get RL to a place where it reliably surpasses BC. In my masters I have been focusing on answering questions which I believe will help this push. 
+
+
