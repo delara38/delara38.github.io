@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-A simple inline announcement with Markdown emoji! :sparkles: :smile:
+Graduated from McGill University with a Bachelor of Arts in the Honours Mathematics and Computer Science Program!

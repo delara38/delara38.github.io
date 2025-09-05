@@ -2,16 +2,16 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: Learning and Searching hoping to find algorithms that do that too
 
 profile:
   align: right
   image: profile_pic.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Toronto, Ontario</p>
+    <p>[firstname][lastname]@gmail.com</p>
+    <p><a href=https://scholar.google.ca/citations?user=-OvkuacAAAAJ&hl=en>Google Scholar</a></p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
@@ -28,11 +28,11 @@ latest_posts:
 ---
 
 
-I am a Master of Science (MSc) student at the Universtiy of Toronto in the <a href='https://rvl.cs.toronto.edu/'>Robot Vision and Learning Lab</a> Supervised by <a href='https://www.cs.toronto.edu/~florian/'> Prof. Florian Shkurti</a>. Previously, I obtained a B.A. at McGill University where I was fortunate to conduct research advised advised by <a href='https://mila.quebec/en/directory/doina-precup'>Prof. Doina Precup</a> and <a href='https://www.math.mcgill.ca/~steele/Site/Home.html'>Prof. Russell Steele</a>. 
+I am a Master of Science (MSc) student at the University of Toronto in the <a href='https://rvl.cs.toronto.edu/'>Robot Vision and Learning Lab</a> Supervised by <a href='https://www.cs.toronto.edu/~florian/'> Prof. Florian Shkurti</a>. Previously, I obtained a B.A. at McGill University where I was fortunate to conduct research advised advised by <a href='https://mila.quebec/en/directory/doina-precup'>Prof. Doina Precup</a> and <a href='https://www.math.mcgill.ca/~steele/Site/Home.html'>Prof. Russell Steele</a>. 
 
 
 My main driving question during my masters: How can RL scale better than BC for Pre-Training? 
 
-Papers in the offline RL community suggest RL should outperform BC when trained on large noisy datasets containing suboptimal demonstrations. This setting bears a strong resemblance to the majority of internet data out there. Yet, RL has failed to be used in favour of BC for large-scale pre-training. My research goal is to help get RL to a place where it reliably surpasses BC. In my masters I have been focusing on answering questions which I believe will help this push. 
+Recent works suggest RL should outperform BC when trained on large noisy datasets containing suboptimal demonstrations. This setting bears a strong resemblance to the majority of internet data out there. Yet, RL has failed to be used in favour of BC for large-scale pre-training. My research goal is to help get RL to a place where it reliably surpasses BC. In my masters I have been focusing on answering questions which I believe will help this push. 
 
 
