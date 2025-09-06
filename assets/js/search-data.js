@@ -440,16 +440,14 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-graduated-from-mcgill-university-with-a-bachelor-of-arts-in-the-honours-mathematics-and-computer-science-program",
+          title: 'Graduated from McGill University with a Bachelor of Arts in the Honours Mathematics...',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-presented-work-on-the-representation-collapse-experience-by-recurrent-networks-when-applied-continual-reinforcement-learning-at-the-can-t-believe-it-s-not-better-workshop-failure-modes-of-sequential-decision-making-in-practice-hosted-at-rlc",
+          title: 'Presented work on the representation collapse experience by recurrent networks when applied Continual...',
           description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-started-my-masters-of-science-at-the-university-of-toronto-with-prof-florian-shkurti",
+          title: 'Started my Masters of Science at the University of Toronto with Prof. Florian...',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
