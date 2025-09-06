@@ -10,7 +10,7 @@ profile:
   image_circular: false # crops the image to make it circular
   more_info: >
     <p>Toronto, Ontario</p>
-    <p>[firstname][lastname]@gmail.com</p>
+    <p>nathan[lastname]1@gmail.com</p>
     <p><a href=https://scholar.google.ca/citations?user=-OvkuacAAAAJ&hl=en>Google Scholar</a></p>
 
 selected_papers: true # includes a list of papers marked as "selected={true}"
