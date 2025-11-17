@@ -135,6 +135,7 @@ exclude:
   - Gemfile.lock
   - INSTALL.md
   - LICENSE
+  - _pages/dropdown.md
   - lighthouse_results/
   - package.json
   - package-lock.json
