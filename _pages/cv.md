@@ -4,5 +4,5 @@ permalink: /cv/
 title: cv
 nav: true
 nav_order: 5
-external_url: /assets/pdf/example_pdf.pdf
+external_url: /assets/pdf/nathan_delara_fall2025.pdf
 ---
