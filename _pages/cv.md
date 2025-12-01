@@ -1,8 +1,8 @@
 ---
-layout: default
+layout: none
 permalink: /cv/
 title: cv
 nav: true
 nav_order: 5
-redirect: /assets/pdf/nathan_delara_fall2025.pdf
+external_url: /assets/pdf/example_pdf.pdf
 ---
