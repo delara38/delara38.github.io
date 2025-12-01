@@ -51,6 +51,9 @@ ninja.data = [{
           section: "News",},{id: "news-started-my-masters-of-science-at-the-university-of-toronto-with-prof-florian-shkurti",
           title: 'Started my Masters of Science at the University of Toronto with Prof. Florian...',
           description: "",
+          section: "News",},{id: "news-our-paper-stitch-ope-trajectory-stitching-with-guided-diffusion-for-off-policy-evaluation-was-accepted-to-neurips-2025-as-a-spotlight",
+          title: 'Our paper STITCH-OPE: Trajectory Stitching with Guided Diffusion for Off-Policy Evaluation was accepted...',
+          description: "",
           section: "News",},{
         id: 'social-email',
         title: 'email',
