@@ -7,41 +7,31 @@ nav: true
 nav_order: 4
 ---
 
-{% if site.data.repositories.github_users %}
+## GitHub Profile
 
-## GitHub users
-
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% for user in site.data.repositories.github_users %}
-    {% include repository/repo_user.liquid username=user %}
-  {% endfor %}
-</div>
+<p>
+  <a href="https://github.com/delara38" target="_blank" rel="noopener noreferrer">
+    <i class="fa-brands fa-github"></i> delara38
+  </a>
+</p>
 
 ---
 
-{% if site.repo_trophies.enabled %}
-{% for user in site.data.repositories.github_users %}
-{% if site.data.repositories.github_users.size > 1 %}
+## Repositories
 
-  <h4>{{ user }}</h4>
-  {% endif %}
-  <div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
-  {% include repository/repo_trophies.liquid username=user %}
-  </div>
-
----
-
-{% endfor %}
-{% endif %}
-{% endif %}
-
-{% if site.data.repositories.github_repos %}
-
-## GitHub Repositories
-
-<div class="repositories d-flex flex-wrap flex-md-row flex-column justify-content-between align-items-center">
+<div class="repo-list">
   {% for repo in site.data.repositories.github_repos %}
-    {% include repository/repo.liquid repository=repo %}
+    {% assign repo_parts = repo | split: '/' %}
+    {% assign repo_name = repo_parts[1] %}
+    <div class="repo-card p-3 mb-3" style="border: 1px solid var(--global-divider-color); border-radius: 8px;">
+      <h5 style="margin-bottom: 0.5rem;">
+        <a href="https://github.com/{{ repo }}" target="_blank" rel="noopener noreferrer">
+          <i class="fa-brands fa-github"></i> {{ repo_name | replace: '_', ' ' | replace: '-', ' ' }}
+        </a>
+      </h5>
+      <p class="text-muted mb-0" style="font-size: 0.9rem;">
+        <code>{{ repo }}</code>
+      </p>
+    </div>
   {% endfor %}
 </div>
-{% endif %}
