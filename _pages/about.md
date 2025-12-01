@@ -1,6 +1,6 @@
 ---
 layout: about
-title: about
+title: About
 permalink: /
 subtitle: Learning and Searching hoping to find algorithms that do that too
 
