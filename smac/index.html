@@ -117,7 +117,7 @@
 
 <section class="hero teaser">
   <div class="container is-max-desktop">
-    <div class="hero-body">
+    <div class="hero-body has-text-centered">
       <img src="./static/images/graphics_for_smac2.png"
            alt="Reward landscapes comparing CalQL and SMAC on the Kitchen task. CalQL's offline and online maxima are separated by a low-reward valley, while SMAC's maxima lie on a connected hill."
            style="width:60%;">
@@ -238,7 +238,7 @@
         </div>
 
         <div class="columns is-centered has-text-centered">
-          <div class="column">
+          <div class="column is-four-fifths">
             <img src="./static/images/kitchen_planar_plot_2x2.png"
                  alt="Planar reward landscapes showing disconnected maxima for baselines and connected maxima for SMAC."
                  style="width:100%;">
@@ -247,9 +247,11 @@
               The line between pre-trained and SAC fine-tuned parameters travels through a low reward valley for all algorithms except SMAC. SMAC&rsquo;s maxima are linearly connected.
             </p>
           </div>
+        </div>
 
+        <div class="content has-text-justified">
           <p>
-            We see that the SAC maxima are wider and not connected to the pre-trained checkpoint along monotonically improving line across all baselines, with low reward valleys between optima. 
+            We see that the SAC maxima are wider and not connected to the pre-trained checkpoint along a monotonically improving line across all baselines, with low reward valleys between optima.
             Conversely, SAC maxima and SMAC maxima are linearly connected. This suggests that for past offline RL methods, the maxima do not lie on a connected, concave subspace.
           </p>
         </div>
@@ -266,7 +268,7 @@
           <div class="column is-four-fifths">
             <img src="./static/images/kitchen_manifold_plot.png"
                  alt="t-SNE projections of training trajectories showing SAC fine-tuning crossing low-reward regions."
-                 style="width:100%;">
+                 style="width:80%;">
             <p class="has-text-centered" style="margin-top: 0.5rem;">
               <b>t-SNE projections of training trajectories show linearly disconnected maxima.</b>
               SAC fine-tuning crosses a valley of low reward, while TD3+BC fine-tuning does not&mdash;consistent with the reward valley hypothesis.
