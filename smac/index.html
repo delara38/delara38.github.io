@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="description"
-        content="SMAC: Your paper description here.">
-  <meta name="keywords" content="SMAC">
+        content="SMAC: Score-Matched Actor-Critics for Robust Offline-to-Online Transfer. An offline RL method that pre-trains actor-critics for smooth fine-tuning with online RL algorithms.">
+  <meta name="keywords" content="SMAC, offline reinforcement learning, offline-to-online RL, score matching, actor-critic, fine-tuning, D4RL">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SMAC</title>
+  <title>SMAC: Score-Matched Actor-Critics for Robust Offline-to-Online Transfer</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
         rel="stylesheet">
@@ -18,13 +18,24 @@
   <link rel="stylesheet"
         href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="shortcut icon" href="/assets/img/neural_network.png">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script defer src="./static/js/fontawesome.all.min.js"></script>
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']],
+      }
+    };
+  </script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 
@@ -53,24 +64,23 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title">SMAC: Your Paper Title Here</h1>
+          <h1 class="title is-1 publication-title">SMAC: Score-Matched Actor-Critics for Robust Offline-to-Online Transfer</h1>
           <div class="is-size-5 publication-authors">
-            <!-- TODO: Replace with your actual authors -->
             <span class="author-block">
-              <a href="https://delara38.github.io">Nathan S. de Lara</a><sup>1</sup>,</span>
+              <a href="https://delara38.github.io">Nathan S. de Lara</a><sup>1,2</sup>,</span>
             <span class="author-block">
-              <a href="#">Co-Author Name</a><sup>1</sup></span>
+              <a href="https://www.cs.toronto.edu/~florian/">Florian Shkurti</a><sup>1,2</sup></span>
           </div>
 
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>University of Toronto</span>
+            <span class="author-block"><sup>1</sup>University of Toronto,</span>
+            <span class="author-block"><sup>2</sup>Vector Institute</span>
           </div>
 
           <div class="column has-text-centered">
             <div class="publication-links">
-              <!-- PDF Link. -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://arxiv.org/pdf/2602.17632"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fas fa-file-pdf"></i>
@@ -79,7 +89,7 @@
                 </a>
               </span>
               <span class="link-block">
-                <a href="#"
+                <a href="https://arxiv.org/abs/2602.17632"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="ai ai-arxiv"></i>
@@ -87,14 +97,13 @@
                   <span>arXiv</span>
                 </a>
               </span>
-              <!-- Code Link. -->
               <span class="link-block">
-                <a href="#"
+                <a href="https://github.com/"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code</span>
+                  <span>Code (Coming Soon)</span>
                   </a>
               </span>
             </div>
@@ -106,19 +115,20 @@
   </div>
 </section>
 
-<!-- Teaser image/figure (optional). Replace src with your own figure. -->
-<!--
 <section class="hero teaser">
   <div class="container is-max-desktop">
     <div class="hero-body">
-      <img src="./static/images/teaser.png" alt="SMAC teaser figure." style="width:100%;">
-      <h2 class="subtitle has-text-centered">
-        A brief caption describing your teaser figure.
+      <img src="./static/images/graphics_for_smac2.png"
+           alt="Reward landscapes comparing CalQL and SMAC on the Kitchen task. CalQL's offline and online maxima are separated by a low-reward valley, while SMAC's maxima lie on a connected hill."
+           style="width:100%;">
+      <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
+        <b>Past offline RL methods converge to maxima separated from online optima by low-reward valleys.</b>
+        Top: reward landscapes on the Kitchen task for CalQL (left) and SMAC (right).
+        Bottom: SMAC achieves smooth offline-to-online transfer while CalQL suffers a performance collapse.
       </h2>
     </div>
   </div>
 </section>
--->
 
 
 <section class="section">
@@ -129,68 +139,322 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            Your abstract goes here. Replace this placeholder text with the abstract of your SMAC paper.
+            Modern offline Reinforcement Learning (RL) methods find performant actor-critics, however, fine-tuning these actor-critics online with value-based RL algorithms typically causes immediate drops in performance.
+            We provide evidence consistent with the hypothesis that, in the loss landscape, offline maxima for prior algorithms and online maxima are separated by low-performance valleys that gradient-based fine-tuning traverses.
+          </p>
+          <p>
+            Following this, we present <b>Score Matched Actor-Critic (SMAC)</b>, an offline RL method designed to learn actor&ndash;critics that transition to online value-based RL algorithms with no drop in performance. SMAC avoids valleys between offline and online maxima by regularizing the Q-function during the offline phase to respect a first-order derivative equality between the score of the policy and action-gradient of the Q-function.
+          </p>
+          <p>
+            We experimentally demonstrate that SMAC converges to offline maxima that are connected to better online maxima via paths with monotonically increasing reward found by first-order optimization. SMAC achieves smooth transfer to Soft Actor-Critic and TD3 in 6/6 D4RL tasks. In 4/6 environments, it reduces regret by 34&ndash;58% over the best baseline.
           </p>
         </div>
       </div>
     </div>
     <!--/ Abstract. -->
-
-    <!-- Paper video (optional). -->
-    <!--
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/YOUR_VIDEO_ID?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
-    -->
-    <!--/ Paper video. -->
   </div>
 </section>
 
 
-<!-- Method / Results sections (optional). Uncomment and customize as needed. -->
-<!--
+<!-- Introduction -->
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Method</h2>
+        <h2 class="title is-3">The Offline-to-Online Transfer Problem</h2>
         <div class="content has-text-justified">
           <p>
-            Describe your method here. You can include figures:
+            Fine-tuning actor&ndash;critics from offline RL checkpoints with online value-based methods often triggers an <b>immediate drop in performance</b>. For offline RL to truly support a pre-train &rarr; fine-tune paradigm&mdash;analogous to what we see in large language models&mdash;it should produce actor&ndash;critics that are both performant <em>and</em> able to readily learn from new data.
           </p>
-          <img src="./static/images/method.png" alt="Method overview.">
+          <p>
+            Ideally, an offline RL algorithm should pre-train an actor-critic that can be fine-tuned by <em>any</em> online method without performance degradation. Popular offline RL methods rely on minimizing Q-values for out-of-distribution actions (e.g., CQL, CalQL) or explicit policy constraints (e.g., TD3+BC, IQL), which can misalign the offline objective with the online objective.
+          </p>
+        </div>
+
+        <h3 class="title is-4">A Geometric Explanation</h3>
+        <div class="content has-text-justified">
+          <p>
+            We study this problem through the lens of <b>optimization landscape geometry</b>. Two high-performing solutions are <em>linearly connected</em> if reward changes monotonically along the straight line between them in parameter space. We hypothesize that the initial performance drop during fine-tuning is explained by offline and online maxima being <b>linearly disconnected</b>&mdash;separated by low-reward valleys that gradient-based optimization must traverse.
+          </p>
+          <p>
+            Interestingly, simply increasing dataset size and coverage does <em>not</em> bridge this gap:
+          </p>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <img src="./static/images/offline_online_3x3_by_dataset.png"
+                 alt="Increasing dataset size does not bridge the offline-to-online gap."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>Increasing dataset size and coverage does not bridge the offline-to-online gap.</b>
+              Even when the dataset is large enough to learn optimal policies offline, the actor-critics found are still quickly unlearned by online fine-tuning.
+            </p>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
+
+<!-- Linear Connectivity -->
+<section class="section">
+  <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Results</h2>
+        <h2 class="title is-3">Linear Connectivity of Offline and Online Maxima</h2>
+
         <div class="content has-text-justified">
           <p>
-            Describe your results here. You can include tables, figures, etc.
+            To test our hypothesis, we visualize the <b>reward landscape</b> between offline pre-trained checkpoints and their SAC fine-tuned counterparts. We interpolate between the pre-trained parameters \(\theta_{\text{offline}}\) and the fine-tuned parameters \(\theta_{\text{online}}\) along the line \(\theta(t) = t \cdot \theta_{\text{offline}} + (1-t) \cdot \theta_{\text{online}}\) and evaluate the reward at each point.
+          </p>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <img src="./static/images/reward_interpolation_combined_plot.png"
+                 alt="Reward interpolation between pre-trained and fine-tuned checkpoints showing valleys for baselines but not SMAC."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>Reward valleys when linearly interpolating between pre-training and fine-tuning checkpoints.</b>
+              \(0\) is the pre-trained checkpoint, \(1\) is the SAC fine-tuned checkpoint. All methods except SMAC exhibit a drop in performance between checkpoints. Lines show mean over 4 seeds with shading for standard error.
+            </p>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            The interpolation plots above reveal that in environments where a performance drop is observed upon transfer, all algorithms except SMAC show a reward valley between the offline and online checkpoints. This suggests that the maxima do not lie on a connected, concave subspace.
+          </p>
+        </div>
+
+        <h3 class="title is-4">Planar Reward Landscapes</h3>
+        <div class="content has-text-justified">
+          <p>
+            We can further visualize the geometry by looking at the reward surface on the plane defined by three parameterizations: the pre-trained checkpoint \(\theta\), a SAC fine-tuned checkpoint \(\theta_1\), and a TD3+BC fine-tuned checkpoint \(\theta_2\). The plane is spanned by \(u := \theta_1 - \theta\) and \(v := \theta_2 - \theta\).
+          </p>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <img src="./static/images/kitchen_planar_plot_2x2.png"
+                 alt="Planar reward landscapes showing disconnected maxima for baselines and connected maxima for SMAC."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>Reward visualized along a plane in parameter space on the Kitchen task.</b>
+              The line between pre-trained and SAC fine-tuned parameters travels through a low reward valley for all algorithms except SMAC. SMAC&rsquo;s maxima are linearly connected.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="title is-4">t-SNE Projections of Training Trajectories</h3>
+        <div class="content has-text-justified">
+          <p>
+            While the planar plots above show the geometry on a specific 2D slice, we also project the full training trajectories into 2D using t-SNE. The projections are consistent with our planar visualization: SAC fine-tuning trajectories pass through regions of substantially lower reward before converging.
+          </p>
+        </div>
+
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <img src="./static/images/kitchen_manifold_plot.png"
+                 alt="t-SNE projections of training trajectories showing SAC fine-tuning crossing low-reward regions."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>t-SNE projections of training trajectories show linearly disconnected maxima.</b>
+              SAC fine-tuning crosses a valley of low reward, while TD3+BC fine-tuning does not&mdash;consistent with the reward valley hypothesis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Method -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">SMAC: Regularizing Q-Values with Dataset Scores</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            SMAC is an offline RL method that smoothly transitions to fine-tuning with an arbitrary online RL algorithm. It extends SAC with two key ingredients: (1) a theory-inspired regularization of the Q-function and (2) the Muon optimizer.
+          </p>
+
+          <h3 class="title is-4">The Max-Entropy Identity</h3>
+          <p>
+            In maximum-entropy RL, the optimal policy \(\pi^*\) satisfies:
+          </p>
+          \[
+            \log \pi^*(a|s) = \frac{1}{\alpha} Q^*(s, a) - \log \int_{\bar{a}} \exp\!\left(\frac{1}{\alpha} Q^*(s, \bar{a})\right) d\bar{a}
+          \]
+          <p>
+            Taking the gradient with respect to \(a\):
+          </p>
+          \[
+            \nabla_a \log \pi^*(a|s) = \frac{1}{\alpha} \nabla_a Q^*(s, a)
+          \]
+          <p>
+            This identity tells us that the <b>score of the optimal policy</b> (the gradient of its log-density) should be proportional to the <b>action-gradient of the Q-function</b>. SMAC enforces this relationship during offline training.
+          </p>
+
+          <h3 class="title is-4">Estimating the Dataset&rsquo;s Score</h3>
+          <p>
+            We estimate the score \(\nabla_a \log \pi^{\mathcal{D}}(a|s)\) using a <b>diffusion model</b> trained with Reinforcement via Supervision (RvS). The diffusion model \(\epsilon_\omega\) is conditioned on both the state \(s\) and a trajectory-level reward signal \(w\). At noise step \(k=1\), this approximates the score of the data distribution. We use the architecture from Hansen-Estruch et al. (IDQL).
+          </p>
+
+          <h3 class="title is-4">Score-Matching Regularization</h3>
+          <p>
+            We regularize the critic's action-gradient to be proportional to the dataset score. Letting \(\alpha_\psi(s)\) be a learned state-dependent proportionality constant, the score-matching loss is:
+          </p>
+          \[
+            \mathcal{L}^{SM}(\theta, \psi) = \mathbb{E}_{\substack{s \sim \mathcal{D} \\ a \sim B(\mathcal{A})}} \left[ \left\| \nabla_a Q_\theta(s, a) - \alpha_\psi(s) \, \epsilon_\omega(s, a, w, 1) \right\|_2^2 \right]
+          \]
+          <p>
+            where \(B(\mathcal{A})\) samples 50/50 from the policy and the uniform distribution over the action space. The full SMAC critic loss combines this with the standard SAC critic loss:
+          </p>
+          \[
+            \mathcal{L}^{SMAC}(\theta, \psi) = \kappa \, \mathcal{L}^{SM}(\theta, \psi) + \mathcal{L}^{AC}(\theta)
+          \]
+          <p>
+            where \(\mathcal{L}^{AC}\) is the standard temporal-difference loss and \(\kappa\) controls the regularization strength. The policy is optimized using the standard SAC policy loss. This is the <b>only change</b> SMAC makes to the original SAC objectives during the offline phase.
+          </p>
+
+          <h3 class="title is-4">Using Muon as an Optimizer</h3>
+          <p>
+            We replace the Adam optimizer with <b>Muon</b>, which takes steps in the direction of steepest descent under the spectral norm (the largest singular value of a matrix). Recent work finds that Muon optimizes towards shallower optima, a property linked to stronger transfer to downstream fine-tuning. In our ablations, Muon improves SMAC's transfer but does not help the baselines.
           </p>
         </div>
       </div>
     </div>
   </div>
 </section>
--->
+
+
+<!-- Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Experimental Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            We evaluate SMAC on 6 D4RL benchmark tasks: <code>hopper-medium-replay</code>, <code>walker2d-medium-replay</code>, <code>kitchen-partial</code>, <code>door-binary</code>, <code>pen-binary</code>, and <code>relocate-binary</code>. We compare against three offline RL baselines: CalQL/CQL, IQL, and TD3+BC. After offline pre-training, each method is fine-tuned with SAC, TD3, and TD3+BC.
+          </p>
+        </div>
+
+        <h3 class="title is-4">Transfer to SAC</h3>
+        <div class="content has-text-justified">
+          <p>
+            Most baselines experience drastic performance drops upon transfer: CalQL in 3/4 environments, IQL in 4/6, and TD3+BC in 5/6. In contrast, <b>SMAC avoids any performance drop across all environments</b>, smoothly improving to the highest observed performance.
+          </p>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <img src="./static/images/main_results_plot.png"
+                 alt="SMAC achieves smooth offline-to-online transfer to SAC across 6 D4RL tasks."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>SMAC achieves smooth offline-to-online transfer to SAC.</b>
+              The dotted line marks the transition from offline to online learning. SMAC (red) shows no performance drop across all environments.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Transfer to TD3</h3>
+        <div class="content has-text-justified">
+          <p>
+            When fine-tuning with TD3, we again observe smooth transfer for SMAC, which generally dominates both offline and online performance in 4/6 environments.
+          </p>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column">
+            <img src="./static/images/main_results_td3.png"
+                 alt="SMAC achieves smooth offline-to-online transfer to TD3."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>SMAC achieves smooth offline-to-online transfer to TD3.</b>
+              SMAC still achieves smooth transfer in 6/6 environments when fine-tuning with TD3.
+            </p>
+          </div>
+        </div>
+
+        <h3 class="title is-4">Aggregate Regret</h3>
+        <div class="content has-text-justified">
+          <p>
+            The table below shows the normalized regret averaged over all six environments (lower is better). Values are min-max normalized per environment then averaged. SMAC achieves the <b>lowest regret across all four online algorithms</b>, with particularly strong gains when paired with SAC.
+          </p>
+        </div>
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Offline Algorithm</th>
+                  <th>AWR</th>
+                  <th>SAC</th>
+                  <th>TD3</th>
+                  <th>TD3+BC</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>IQL</td>
+                  <td>0.508</td>
+                  <td>0.471</td>
+                  <td>0.653</td>
+                  <td>0.494</td>
+                </tr>
+                <tr style="font-weight: bold;">
+                  <td>SMAC (ours)</td>
+                  <td><b>0.380</b></td>
+                  <td><b>0.031</b></td>
+                  <td><b>0.090</b></td>
+                  <td><b>0.226</b></td>
+                </tr>
+                <tr>
+                  <td>TD3+BC</td>
+                  <td>0.654</td>
+                  <td>0.962</td>
+                  <td>0.545</td>
+                  <td>0.562</td>
+                </tr>
+                <tr>
+                  <td>CalQL/CQL</td>
+                  <td>0.482</td>
+                  <td>0.448</td>
+                  <td>0.442</td>
+                  <td>0.614</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="has-text-centered" style="margin-top: 0.25rem;">
+              Normalized regret averaged over all six environments (&darr; lower is better). <b>Bold</b> denotes best per column.
+            </p>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            In 4/6 environments, SMAC pre-training followed by SAC fine-tuning <b>reduces regret by 34&ndash;58%</b> relative to the best baseline, while reaching the highest final performance among all methods tested.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     <pre><code>@article{delara2025smac,
-  author    = {de Lara, Nathan S.},
-  title     = {SMAC: Your Paper Title Here},
-  journal   = {TODO},
+  author    = {de Lara, Nathan S. and Shkurti, Florian},
+  title     = {SMAC: Score-Matched Actor-Critics for Robust Offline-to-Online Transfer},
+  journal   = {arXiv preprint arXiv:2602.17632},
   year      = {2025},
 }</code></pre>
   </div>
