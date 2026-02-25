@@ -164,7 +164,7 @@
           <p>
             Ideally, an offline RL algorithm should pre-train an actor-critic that can be fine-tuned by <em>any</em> online method without performance degradation.
             However, fine-tuningactor&ndash;critics found by past offline RL methods with online value-based methods often triggered an immediate drop in performance. 
-            For offline RL to truly support a pre-train &rarr; fine-tune paradigm&mdash;analogous to what we see in large language models&mdash;it should produce actor&ndash;critics 
+            For offline RL to truly support a pre-train &rarr; fine-tune paradigm (analogous to what we see in large language models), it should produce actor&ndash;critics 
             that are both performant, and, able to readily learn from new data. This is a problem we aim to address with SMAC.
           </p>
 
@@ -183,7 +183,7 @@
         <h3 class="title is-4">A Geometric Explanation</h3>
         <div class="content has-text-justified">
           <p>
-            We study this problem through the lens of <b>optimization landscape geometry</b>. Two high-performing solutions are <em>linearly connected</em> if reward changes
+            We study this problem through the lens of <b>optimization landscape geometry</b>. Two high-performing solutions are <b>linearly connected</b> if reward changes
              monotonically along the straight line between them in parameter space. We hypothesize that the initial performance drop during fine-tuning is explained by offline and online maxima 
              being <b>linearly disconnected</b>&mdash;separated by low-reward valleys that gradient-based optimization must traverse.
           </p>
@@ -241,7 +241,7 @@
           <div class="column is-four-fifths">
             <img src="./static/images/kitchen_planar_plot_2x2.png"
                  alt="Planar reward landscapes showing disconnected maxima for baselines and connected maxima for SMAC."
-                 style="width:100%;">
+                 style="width:70%;">
             <p class="has-text-centered" style="margin-top: 0.5rem;">
               <b>Reward visualized along a plane in parameter space on the Kitchen task.</b>
               The line between pre-trained and SAC fine-tuned parameters travels through a low reward valley for all algorithms except SMAC. SMAC&rsquo;s maxima are linearly connected.
