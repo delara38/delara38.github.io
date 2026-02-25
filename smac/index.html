@@ -120,7 +120,7 @@
     <div class="hero-body">
       <img src="./static/images/graphics_for_smac2.png"
            alt="Reward landscapes comparing CalQL and SMAC on the Kitchen task. CalQL's offline and online maxima are separated by a low-reward valley, while SMAC's maxima lie on a connected hill."
-           style="width:100%;">
+           style="width:60%;">
       <h2 class="subtitle has-text-centered" style="margin-top: 1rem;">
         <b>Past offline RL methods converge to maxima separated from online optima by low-reward valleys.</b>
         Top: reward landscapes on the Kitchen task for CalQL (left) and SMAC (right).
@@ -140,13 +140,11 @@
         <div class="content has-text-justified">
           <p>
             Modern offline Reinforcement Learning (RL) methods find performant actor-critics, however, fine-tuning these actor-critics online with value-based RL algorithms typically causes immediate drops in performance.
-            We provide evidence consistent with the hypothesis that, in the loss landscape, offline maxima for prior algorithms and online maxima are separated by low-performance valleys that gradient-based fine-tuning traverses.
-          </p>
-          <p>
-            Following this, we present <b>Score Matched Actor-Critic (SMAC)</b>, an offline RL method designed to learn actor&ndash;critics that transition to online value-based RL algorithms with no drop in performance. SMAC avoids valleys between offline and online maxima by regularizing the Q-function during the offline phase to respect a first-order derivative equality between the score of the policy and action-gradient of the Q-function.
-          </p>
-          <p>
-            We experimentally demonstrate that SMAC converges to offline maxima that are connected to better online maxima via paths with monotonically increasing reward found by first-order optimization. SMAC achieves smooth transfer to Soft Actor-Critic and TD3 in 6/6 D4RL tasks. In 4/6 environments, it reduces regret by 34&ndash;58% over the best baseline.
+            We provide evidence consistent with the hypothesis that, in the loss landscape, offline maxima for prior algorithms and online maxima are separated by low-performance valleys that gradient-based fine-tuning traverses. 
+            Following this, we present <b>Score Matched Actor-Critic (SMAC)</b>, an offline RL method designed to learn actor&ndash;critics that transition to online value-based RL algorithms with no drop in performance. 
+            SMAC avoids valleys between offline and online maxima by regularizing the Q-function during the offline phase to respect a first-order derivative equality between the score of the policy and action-gradient of the 
+            Q-function. We experimentally demonstrate that SMAC converges to offline maxima that are connected to better online maxima via paths with monotonically increasing reward found by first-order optimization. 
+            SMAC achieves smooth transfer to Soft Actor-Critic and TD3 in 6/6 D4RL tasks. In 4/6 environments, it reduces regret by 34&ndash;58% over the best baseline.
           </p>
         </div>
       </div>
@@ -164,34 +162,35 @@
         <h2 class="title is-3">The Offline-to-Online Transfer Problem</h2>
         <div class="content has-text-justified">
           <p>
-            Fine-tuning actor&ndash;critics from offline RL checkpoints with online value-based methods often triggers an <b>immediate drop in performance</b>. For offline RL to truly support a pre-train &rarr; fine-tune paradigm&mdash;analogous to what we see in large language models&mdash;it should produce actor&ndash;critics that are both performant <em>and</em> able to readily learn from new data.
+            Ideally, an offline RL algorithm should pre-train an actor-critic that can be fine-tuned by <em>any</em> online method without performance degradation.
+            However, fine-tuningactor&ndash;critics found by past offline RL methods with online value-based methods often triggered an immediate drop in performance. 
+            For offline RL to truly support a pre-train &rarr; fine-tune paradigm&mdash;analogous to what we see in large language models&mdash;it should produce actor&ndash;critics 
+            that are both performant, and, able to readily learn from new data. This is a problem we aim to address with SMAC.
           </p>
+
           <p>
-            Ideally, an offline RL algorithm should pre-train an actor-critic that can be fine-tuned by <em>any</em> online method without performance degradation. Popular offline RL methods rely on minimizing Q-values for out-of-distribution actions (e.g., CQL, CalQL) or explicit policy constraints (e.g., TD3+BC, IQL), which can misalign the offline objective with the online objective.
+            
+           SMAC pre-trains actor-critics that are both performant, and, able to readily learn from new data with online value-based methods. We find that a key 
+           to smooth offline-to-online transfer is <b>linear connectivity</b> between offline and online maxima. Similarly, the notion that offline and online objectives are aligned 
+           towards finding the same optima.  
+            
+            From this perspective, we can understand why past methods like CalQL and IQL experience a performance drop upon transfer. Popular offline RL methods rely on minimizing Q-values 
+            or out-of-distribution actions (e.g., CQL, CalQL) or explicit policy constraints (e.g., TD3+BC, IQL), which 
+            can misalign the offline objective with the online objective.
           </p>
         </div>
 
         <h3 class="title is-4">A Geometric Explanation</h3>
         <div class="content has-text-justified">
           <p>
-            We study this problem through the lens of <b>optimization landscape geometry</b>. Two high-performing solutions are <em>linearly connected</em> if reward changes monotonically along the straight line between them in parameter space. We hypothesize that the initial performance drop during fine-tuning is explained by offline and online maxima being <b>linearly disconnected</b>&mdash;separated by low-reward valleys that gradient-based optimization must traverse.
+            We study this problem through the lens of <b>optimization landscape geometry</b>. Two high-performing solutions are <em>linearly connected</em> if reward changes
+             monotonically along the straight line between them in parameter space. We hypothesize that the initial performance drop during fine-tuning is explained by offline and online maxima 
+             being <b>linearly disconnected</b>&mdash;separated by low-reward valleys that gradient-based optimization must traverse.
           </p>
-          <p>
-            Interestingly, simply increasing dataset size and coverage does <em>not</em> bridge this gap:
-          </p>
+          
         </div>
 
-        <div class="columns is-centered has-text-centered">
-          <div class="column is-four-fifths">
-            <img src="./static/images/offline_online_3x3_by_dataset.png"
-                 alt="Increasing dataset size does not bridge the offline-to-online gap."
-                 style="width:100%;">
-            <p class="has-text-centered" style="margin-top: 0.5rem;">
-              <b>Increasing dataset size and coverage does not bridge the offline-to-online gap.</b>
-              Even when the dataset is large enough to learn optimal policies offline, the actor-critics found are still quickly unlearned by online fine-tuning.
-            </p>
-          </div>
-        </div>
+       
       </div>
     </div>
   </div>
@@ -207,7 +206,13 @@
 
         <div class="content has-text-justified">
           <p>
-            To test our hypothesis, we visualize the <b>reward landscape</b> between offline pre-trained checkpoints and their SAC fine-tuned counterparts. We interpolate between the pre-trained parameters \(\theta_{\text{offline}}\) and the fine-tuned parameters \(\theta_{\text{online}}\) along the line \(\theta(t) = t \cdot \theta_{\text{offline}} + (1-t) \cdot \theta_{\text{online}}\) and evaluate the reward at each point.
+            To test our hypothesis, we visualize the <b>reward landscape</b> between offline pre-trained checkpoints and their SAC fine-tuned counterparts. We plot performance along 1-dimensional and 2-dimensional slices in 
+            parameter space. A later result looks at projections of the training trajectories into 2D using t-SNE, but here we focus on the 1-dimensional and 2-dimensional slices for finding valleys between offline and online maxima.
+            
+            In the figure below, we interpolate between the
+             pre-trained parameters \(\theta_{\text{offline}}\) and the fine-tuned parameters \(\theta_{\text{online}}\) along the line \(\theta(t) = t \cdot \theta_{\text{offline}} + (1-t) \cdot \theta_{\text{online}}\) 
+             and evaluate the reward at each point. The lines show that between \(t = 0\) and \(t = 1\), all the baselines experience a drop in performance between checkpoints in at leat one task. These drops resembling low-reward valleys
+             along the line between the found maxima. Later in the results section we see that the existence of these valleys is consistent with whether or not the algorithms experience a performance drop upon transfer.
           </p>
         </div>
 
@@ -218,21 +223,17 @@
                  style="width:100%;">
             <p class="has-text-centered" style="margin-top: 0.5rem;">
               <b>Reward valleys when linearly interpolating between pre-training and fine-tuning checkpoints.</b>
-              \(0\) is the pre-trained checkpoint, \(1\) is the SAC fine-tuned checkpoint. All methods except SMAC exhibit a drop in performance between checkpoints. Lines show mean over 4 seeds with shading for standard error.
+              \(0\) is the pre-trained checkpoint, \(1\) is the SAC fine-tuned checkpoint. All methods except SMAC exhibit a drop in performance between checkpoints. Lines show mean over 
+              4 seeds with shading for standard error.
             </p>
           </div>
         </div>
 
+        
         <div class="content has-text-justified">
           <p>
-            The interpolation plots above reveal that in environments where a performance drop is observed upon transfer, all algorithms except SMAC show a reward valley between the offline and online checkpoints. This suggests that the maxima do not lie on a connected, concave subspace.
-          </p>
-        </div>
-
-        <h3 class="title is-4">Planar Reward Landscapes</h3>
-        <div class="content has-text-justified">
-          <p>
-            We can further visualize the geometry by looking at the reward surface on the plane defined by three parameterizations: the pre-trained checkpoint \(\theta\), a SAC fine-tuned checkpoint \(\theta_1\), and a TD3+BC fine-tuned checkpoint \(\theta_2\). The plane is spanned by \(u := \theta_1 - \theta\) and \(v := \theta_2 - \theta\).
+            We can further visualize the geometry by looking at the reward surface on the plane defined by three parameterizations: the pre-trained checkpoint \(\theta\), a SAC fine-tuned checkpoint \(\theta_1\), 
+            and a TD3+BC fine-tuned checkpoint \(\theta_2\). The plane is spanned by \(u := \theta_1 - \theta\) and \(v := \theta_2 - \theta\).
           </p>
         </div>
 
@@ -246,12 +247,18 @@
               The line between pre-trained and SAC fine-tuned parameters travels through a low reward valley for all algorithms except SMAC. SMAC&rsquo;s maxima are linearly connected.
             </p>
           </div>
-        </div>
 
+          <p>
+            We see that the SAC maxima are wider and not connected to the pre-trained checkpoint along monotonically improving line across all baselines, with low reward valleys between optima. 
+            Conversely, SAC maxima and SMAC maxima are linearly connected. This suggests that for past offline RL methods, the maxima do not lie on a connected, concave subspace.
+          </p>
+        </div>
+         
         <h3 class="title is-4">t-SNE Projections of Training Trajectories</h3>
         <div class="content has-text-justified">
           <p>
-            While the planar plots above show the geometry on a specific 2D slice, we also project the full training trajectories into 2D using t-SNE. The projections are consistent with our planar visualization: SAC fine-tuning trajectories pass through regions of substantially lower reward before converging.
+            While the planar plots above show the geometry on a specific 2D slice, we also project the full training trajectories into 2D using t-SNE. The projections are consistent with our planar visualization: 
+            SAC fine-tuning trajectories pass through regions of substantially lower reward before converging. This aligns with the 2-dimensional slices we saw above.
           </p>
         </div>
 
@@ -277,11 +284,12 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">SMAC: Regularizing Q-Values with Dataset Scores</h2>
+        <h2 class="title is-3">How SMAC Works: Regularizing Q-Values with Dataset Scores</h2>
 
         <div class="content has-text-justified">
           <p>
-            SMAC is an offline RL method that smoothly transitions to fine-tuning with an arbitrary online RL algorithm. It extends SAC with two key ingredients: (1) a theory-inspired regularization of the Q-function and (2) the Muon optimizer.
+            SMAC is an offline RL method that smoothly transitions to fine-tuning with an arbitrary online RL algorithm. It extends SAC with two key ingredients: (1) a theory-inspired regularization of 
+            the Q-function and (2) the Muon optimizer.
           </p>
 
           <h3 class="title is-4">The Max-Entropy Identity</h3>
@@ -298,12 +306,15 @@
             \nabla_a \log \pi^*(a|s) = \frac{1}{\alpha} \nabla_a Q^*(s, a)
           \]
           <p>
-            This identity tells us that the <b>score of the optimal policy</b> (the gradient of its log-density) should be proportional to the <b>action-gradient of the Q-function</b>. SMAC enforces this relationship during offline training.
+            This identity tells us that the <b>score of the optimal policy</b> (the gradient of its log-density) should be proportional to the <b>action-gradient of the Q-function</b>. SMAC enforces 
+            this relationship during offline training.
           </p>
 
           <h3 class="title is-4">Estimating the Dataset&rsquo;s Score</h3>
           <p>
-            We estimate the score \(\nabla_a \log \pi^{\mathcal{D}}(a|s)\) using a <b>diffusion model</b> trained with Reinforcement via Supervision (RvS). The diffusion model \(\epsilon_\omega\) is conditioned on both the state \(s\) and a trajectory-level reward signal \(w\). At noise step \(k=1\), this approximates the score of the data distribution. We use the architecture from Hansen-Estruch et al. (IDQL).
+            We estimate the score \(\nabla_a \log \pi^{\mathcal{D}}(a|s)\) using a <b>diffusion model</b> trained with Reinforcement via Supervision (RvS). The diffusion model \(\epsilon_\omega\) is 
+            conditioned on both the state \(s\) and a trajectory-level reward signal \(w\). At noise step \(k=1\), this approximates the score of the data distribution. We use the architecture from 
+            Hansen-Estruch et al. (IDQL).
           </p>
 
           <h3 class="title is-4">Score-Matching Regularization</h3>
@@ -320,12 +331,14 @@
             \mathcal{L}^{SMAC}(\theta, \psi) = \kappa \, \mathcal{L}^{SM}(\theta, \psi) + \mathcal{L}^{AC}(\theta)
           \]
           <p>
-            where \(\mathcal{L}^{AC}\) is the standard temporal-difference loss and \(\kappa\) controls the regularization strength. The policy is optimized using the standard SAC policy loss. This is the <b>only change</b> SMAC makes to the original SAC objectives during the offline phase.
+            where \(\mathcal{L}^{AC}\) is the standard temporal-difference loss and \(\kappa\) controls the regularization strength. The policy is optimized using the standard SAC policy loss. This 
+            is the <b>only change</b> SMAC makes to the original SAC objectives during the offline phase.
           </p>
 
           <h3 class="title is-4">Using Muon as an Optimizer</h3>
           <p>
-            We replace the Adam optimizer with <b>Muon</b>, which takes steps in the direction of steepest descent under the spectral norm (the largest singular value of a matrix). Recent work finds that Muon optimizes towards shallower optima, a property linked to stronger transfer to downstream fine-tuning. In our ablations, Muon improves SMAC's transfer but does not help the baselines.
+            We replace the Adam optimizer with <b>Muon</b>, which takes steps in the direction of steepest descent under the spectral norm (the largest singular value of a matrix). Recent work finds that Muon
+             optimizes towards shallower optima, a property linked to stronger transfer to downstream fine-tuning. In our ablations, Muon improves SMAC's transfer but does not help the baselines.
           </p>
         </div>
       </div>
@@ -342,14 +355,16 @@
         <h2 class="title is-3">Experimental Results</h2>
         <div class="content has-text-justified">
           <p>
-            We evaluate SMAC on 6 D4RL benchmark tasks: <code>hopper-medium-replay</code>, <code>walker2d-medium-replay</code>, <code>kitchen-partial</code>, <code>door-binary</code>, <code>pen-binary</code>, and <code>relocate-binary</code>. We compare against three offline RL baselines: CalQL/CQL, IQL, and TD3+BC. After offline pre-training, each method is fine-tuned with SAC, TD3, and TD3+BC.
+            We evaluate SMAC on 6 D4RL benchmark tasks: <code>hopper-medium-replay</code>, <code>walker2d-medium-replay</code>, <code>kitchen-partial</code>, <code>door-binary</code>, <code>pen-binary</code>, 
+            and <code>relocate-binary</code>. We compare against three offline RL baselines: CalQL/CQL, IQL, and TD3+BC. After offline pre-training, each method is fine-tuned with SAC, TD3, and TD3+BC.
           </p>
         </div>
 
         <h3 class="title is-4">Transfer to SAC</h3>
         <div class="content has-text-justified">
           <p>
-            Most baselines experience drastic performance drops upon transfer: CalQL in 3/4 environments, IQL in 4/6, and TD3+BC in 5/6. In contrast, <b>SMAC avoids any performance drop across all environments</b>, smoothly improving to the highest observed performance.
+            Most baselines experience drastic performance drops upon transfer: CalQL in 3/4 environments, IQL in 4/6, and TD3+BC in 5/6. In contrast, <b>SMAC avoids any performance drop across all environments</b>, 
+            smoothly improving to the highest observed performance.
           </p>
         </div>
         <div class="columns is-centered has-text-centered">
@@ -385,7 +400,8 @@
         <h3 class="title is-4">Aggregate Regret</h3>
         <div class="content has-text-justified">
           <p>
-            The table below shows the normalized regret averaged over all six environments (lower is better). Values are min-max normalized per environment then averaged. SMAC achieves the <b>lowest regret across all four online algorithms</b>, with particularly strong gains when paired with SAC.
+            The table below shows the normalized regret averaged over all six environments (lower is better). Values are min-max normalized per environment then averaged. SMAC achieves the <b>lowest regret 
+              across all four online algorithms</b>, with particularly strong gains when paired with SAC.
           </p>
         </div>
         <div class="columns is-centered">
@@ -441,6 +457,27 @@
           <p>
             In 4/6 environments, SMAC pre-training followed by SAC fine-tuning <b>reduces regret by 34&ndash;58%</b> relative to the best baseline, while reaching the highest final performance among all methods tested.
           </p>
+        </div>
+
+
+        <h3 class="title is-4">Increasing Dataset Size and Coverage does not Bridge the Offline-to-Online Gap</h3>
+        <div class="content has-text-justified">
+          <p>
+            We find that increasing dataset size and coverage does not bridge the offline-to-online gap.
+            Even when the dataset is large enough to learn optimal policies offline, the actor-critics found are still quickly unlearned by online fine-tuning. This stresses the 
+            importance of unifying the offline and online objectives.
+          </p>
+        </div>
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <img src="./static/images/offline_online_3x3_by_dataset.png"
+                 alt="Increasing dataset size does not bridge the offline-to-online gap."
+                 style="width:100%;">
+            <p class="has-text-centered" style="margin-top: 0.5rem;">
+              <b>Increasing dataset size and coverage does not bridge the offline-to-online gap.</b>
+              Even when the dataset is large enough to learn optimal policies offline, the actor-critics found are still quickly unlearned by online fine-tuning.
+            </p>
+          </div>
         </div>
       </div>
     </div>
