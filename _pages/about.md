@@ -29,7 +29,7 @@ Hi, I'm Nathan, an incoming PhD student at Carnegie Mellon University hoping to 
 Previously, I did my Master of Science (MSc) at the University of Toronto in the <a href='https://rvl.cs.toronto.edu/'>Robot Vision and Learning Lab</a> Supervised by <a href='https://www.cs.toronto.edu/~florian/'> Prof. Florian Shkurti</a>. Before that, I spent 4 great years at McGill University where I was fortunate to work with <a href='https://mila.quebec/en/directory/doina-precup'>Prof. Doina Precup</a> and <a href='https://www.math.mcgill.ca/~steele/Site/Home.html'>Prof. Russell Steele</a>. 
 
 
-My main driving question during my masters: How can RL scale better than BC for Pre-Training? 
+My main driving question during my research: How can RL scale better than BC for Pre-Training? 
 
-Recent works suggest RL should outperform BC when trained on large noisy datasets containing suboptimal demonstrations. This setting bears a strong resemblance to the majority of internet data out there. Yet, RL has failed to be used in favour of BC for large-scale pre-training. My research goal is to help get RL to a place where it reliably surpasses BC. In my masters I have been focusing on answering questions which I believe will help this push. 
+Recent works suggest RL should outperform BC when trained on large noisy datasets containing suboptimal demonstrations. This setting bears a strong resemblance to the majority of internet data out there. Yet, RL has failed to be used in favour of BC for large-scale pre-training. My research goal is to help get RL to a place where it reliably surpasses BC.
 
