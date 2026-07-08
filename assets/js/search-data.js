@@ -54,6 +54,9 @@ ninja.data = [{
           section: "News",},{id: "news-our-paper-stitch-ope-trajectory-stitching-with-guided-diffusion-for-off-policy-evaluation-was-accepted-to-neurips-2025-as-a-spotlight",
           title: 'Our paper STITCH-OPE: Trajectory Stitching with Guided Diffusion for Off-Policy Evaluation was accepted...',
           description: "",
+          section: "News",},{id: "news-our-paper-smac-score-matched-actor-critics-for-robust-offline-to-online-transfer-was-accepted-to-icml-2026",
+          title: 'Our paper SMAC: Score-Matched Actor-Critics for Robust Offline-to-Online Transfer was accepted to ICML...',
+          description: "",
           section: "News",},{
         id: 'social-email',
         title: 'email',
